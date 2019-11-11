@@ -3,6 +3,7 @@ package com.lukmie.restmovieapp.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lukmie.restmovieapp.dto.MovieDto;
 import com.lukmie.restmovieapp.entity.Movie;
+import com.lukmie.restmovieapp.exception.MovieNotFoundException;
 import com.lukmie.restmovieapp.service.MovieService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -88,15 +89,29 @@ class MovieControllerTest {
         when(movieService.getMovie(1L)).thenReturn(
                 createMovie(1L, "12 Angry Men", 1957, "Sidney Lumet", "drama"));
 
-        this.mockMvc.perform(get("/api/movies"))
+        this.mockMvc.perform(get("/api/movies/1"))
                 .andExpect(status().isOk()) //200
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].id", is(1L)))
-                .andExpect(jsonPath("$[0].title", is("12 Angry Men")))
-                .andExpect(jsonPath("$[0].releaseYear", is(1957)))
-                .andExpect(jsonPath("$[0].director", is("Sidney Lumet")))
-                .andExpect(jsonPath("$[0].genres", is("drama")));
+                .andExpect(jsonPath("$.id", is(1L)))
+                .andExpect(jsonPath("$.title", is("12 Angry Men")))
+                .andExpect(jsonPath("$.releaseYear", is(1957)))
+                .andExpect(jsonPath("$.director", is("Sidney Lumet")))
+                .andExpect(jsonPath("$.genres", is("drama")));
+    }
+
+    @Test
+    public void getMovieWithIdThreeShouldReturnError() throws Exception {
+
+        when(movieService.getMovie(3L)).thenThrow(new MovieNotFoundException("Movie not found."));
+
+        this.mockMvc.perform(get("/api/movies/3"))
+                .andExpect(status().isNotFound()) //
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.id", is(1L)))
+                .andExpect(jsonPath("$.title", is("12 Angry Men")))
+                .andExpect(jsonPath("$.releaseYear", is(1957)))
+                .andExpect(jsonPath("$.director", is("Sidney Lumet")))
+                .andExpect(jsonPath("$.genres", is("drama")));
     }
 
     private Movie createMovie(long id, String title, int releaseYear, String director, String genres) {
