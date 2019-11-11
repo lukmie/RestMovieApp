@@ -2,6 +2,7 @@ package com.lukmie.restmovieapp.service;
 
 import com.lukmie.restmovieapp.dto.MovieDto;
 import com.lukmie.restmovieapp.entity.Movie;
+import com.lukmie.restmovieapp.exception.MovieNotFoundException;
 import com.lukmie.restmovieapp.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,10 +26,12 @@ public class MovieService {
     }
 
     public List<Movie> getAllMovies() {
-        return null;
+        return movieRepository.findAll();
     }
 
     public Movie getMovie(Long id) {
-        return null;
+        Movie movie = movieRepository
+                .findById(id).orElseThrow(() -> new MovieNotFoundException(String.format("Movie with '%s' not found", id)));
+        return movie;
     }
 }

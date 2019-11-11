@@ -1,19 +1,18 @@
 package com.lukmie.restmovieapp.controller;
 
 import com.lukmie.restmovieapp.dto.MovieDto;
+import com.lukmie.restmovieapp.entity.Movie;
 import com.lukmie.restmovieapp.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -33,5 +32,18 @@ public class MovieController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
+    @GetMapping
+    public ResponseEntity<List<Movie>> getAllMovies() {
+        List<Movie> allMovies = movieService.getAllMovies();
+        return new ResponseEntity<>(allMovies, HttpStatus.OK);
+        // in one line
+//        return ResponseEntity.ok(movieService.getAllMovies());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Movie> getMovieById(@PathVariable("id") Long id) {
+        Movie movie = movieService.getMovie(id);
+        return new ResponseEntity<>(movie, HttpStatus.OK);
+    }
 
 }

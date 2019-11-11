@@ -76,7 +76,7 @@ class MovieControllerTest {
                 .andExpect(status().isOk()) //200
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].id", is(1L)))
+                .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].title", is("12 Angry Men")))
                 .andExpect(jsonPath("$[0].releaseYear", is(1957)))
                 .andExpect(jsonPath("$[0].director", is("Sidney Lumet")))
@@ -92,7 +92,7 @@ class MovieControllerTest {
         this.mockMvc.perform(get("/api/movies/1"))
                 .andExpect(status().isOk()) //200
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.id", is(1L)))
+                .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.title", is("12 Angry Men")))
                 .andExpect(jsonPath("$.releaseYear", is(1957)))
                 .andExpect(jsonPath("$.director", is("Sidney Lumet")))
@@ -100,18 +100,12 @@ class MovieControllerTest {
     }
 
     @Test
-    public void getMovieWithIdThreeShouldReturnError() throws Exception {
+    public void getMovieWithIdSixShouldReturnError() throws Exception {
 
-        when(movieService.getMovie(3L)).thenThrow(new MovieNotFoundException("Movie not found."));
+        when(movieService.getMovie(6L)).thenThrow(new MovieNotFoundException("Movie with '6' not found"));
 
-        this.mockMvc.perform(get("/api/movies/3"))
-                .andExpect(status().isNotFound()) //
-                .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.id", is(1L)))
-                .andExpect(jsonPath("$.title", is("12 Angry Men")))
-                .andExpect(jsonPath("$.releaseYear", is(1957)))
-                .andExpect(jsonPath("$.director", is("Sidney Lumet")))
-                .andExpect(jsonPath("$.genres", is("drama")));
+        this.mockMvc.perform(get("/api/movies/6"))
+                .andExpect(status().isNotFound()); //404
     }
 
     private Movie createMovie(long id, String title, int releaseYear, String director, String genres) {
