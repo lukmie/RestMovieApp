@@ -6,6 +6,8 @@ import com.lukmie.restmovieapp.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class MovieService {
@@ -20,5 +22,13 @@ public class MovieService {
         movie.setGenres(movieDto.getGenres());
 
         return movieRepository.save(movie).getId();
+    }
+
+    public List<Movie> getAllMovies() {
+        return null;
+    }
+
+    public Movie getMovie(Long id) {
+        return null;
     }
 }
