@@ -7,6 +7,7 @@ import com.lukmie.restmovieapp.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -36,14 +37,14 @@ public class MovieService {
         return movie;
     }
 
-    //    @Transactional
+    @Transactional
     public Movie updateMovie(Long id, MovieDto movieDto) {
         Movie movie = movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(String.format("Movie with '%s' not found", id)));
         movie.setTitle(movieDto.getTitle());
         movie.setReleaseYear(movieDto.getReleaseYear());
         movie.setDirector(movieDto.getDirector());
         movie.setGenres(movieDto.getGenres());
-        movieRepository.save(movie);
+
         return movie;
     }
 }
