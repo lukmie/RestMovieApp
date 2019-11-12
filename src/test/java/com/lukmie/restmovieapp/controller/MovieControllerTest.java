@@ -151,7 +151,7 @@ class MovieControllerTest {
 
         this.mockMvc.perform(put("/api/movies/6")
                 .contentType(MediaType.APPLICATION_JSON)
-                .contentType(objectMapper.writeValueAsString(movieDto)))
+                .content(objectMapper.writeValueAsString(movieDto)))
                 .andExpect(status().isNotFound());
     }
 

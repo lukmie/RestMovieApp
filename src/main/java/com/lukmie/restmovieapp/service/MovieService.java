@@ -32,11 +32,18 @@ public class MovieService {
     public Movie getMovie(Long id) {
         Movie movie = movieRepository
                 .findById(id).orElseThrow(() -> new MovieNotFoundException(String.format("Movie with '%s' not found", id)));
+
         return movie;
     }
 
-
+    //    @Transactional
     public Movie updateMovie(Long id, MovieDto movieDto) {
-        return null;
+        Movie movie = movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(String.format("Movie with '%s' not found", id)));
+        movie.setTitle(movieDto.getTitle());
+        movie.setReleaseYear(movieDto.getReleaseYear());
+        movie.setDirector(movieDto.getDirector());
+        movie.setGenres(movieDto.getGenres());
+        movieRepository.save(movie);
+        return movie;
     }
 }

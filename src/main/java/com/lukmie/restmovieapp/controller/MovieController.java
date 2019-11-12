@@ -46,4 +46,10 @@ public class MovieController {
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Movie> updateMovie(@PathVariable("id") Long id, @Valid @RequestBody MovieDto movieDto) {
+        Movie movie = movieService.updateMovie(id, movieDto);
+        return new ResponseEntity<>(movie, HttpStatus.OK);
+    }
+
 }
