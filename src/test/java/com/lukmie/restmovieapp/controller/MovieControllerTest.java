@@ -21,9 +21,9 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
@@ -106,6 +106,53 @@ class MovieControllerTest {
 
         this.mockMvc.perform(get("/api/movies/6"))
                 .andExpect(status().isNotFound()); //404
+    }
+
+    @Test
+    public void updateReleaseYearOfMovieWithIdShouldChangeYear() throws Exception {
+        MovieDto movieDto = MovieDto.builder()
+                .title("Intouchables")
+                .releaseYear(3011)
+                .director("Olivier Nakache")
+                .genres("drama")
+                .build();
+
+        when(movieService.updateMovie(eq(1L), argumentCaptor.capture()))
+                .thenReturn(createMovie(1L, "Intouchables", 3011, "Olivier Nakache", "drama"));
+
+        this.mockMvc.perform(put("/api/movies/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(movieDto)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.title", is("Intouchables")))
+                .andExpect(jsonPath("$.releaseYear", is(3011)))
+                .andExpect(jsonPath("$.director", is("Olivier Nakache")))
+                .andExpect(jsonPath("$.genres", is("drama")));
+
+        assertThat(argumentCaptor.getValue().getTitle(), is("Intouchables"));
+        assertThat(argumentCaptor.getValue().getReleaseYear(), is(3011));
+        assertThat(argumentCaptor.getValue().getDirector(), is("Olivier Nakache"));
+        assertThat(argumentCaptor.getValue().getGenres(), is("drama"));
+    }
+
+    @Test
+    public void updateMovieWithNotExistingIdShouldReturnError() throws Exception {
+
+        MovieDto movieDto = MovieDto.builder()
+                .title("Intouchables")
+                .releaseYear(3011)
+                .director("Olivier Nakache")
+                .genres("drama")
+                .build();
+
+        when(movieService.updateMovie(eq(6L), argumentCaptor.capture())).thenThrow(new MovieNotFoundException("Movie with '6' not found"));
+
+        this.mockMvc.perform(put("/api/movies/6")
+                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(objectMapper.writeValueAsString(movieDto)))
+                .andExpect(status().isNotFound());
     }
 
     private Movie createMovie(long id, String title, int releaseYear, String director, String genres) {

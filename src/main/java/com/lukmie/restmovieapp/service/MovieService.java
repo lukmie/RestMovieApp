@@ -34,4 +34,9 @@ public class MovieService {
                 .findById(id).orElseThrow(() -> new MovieNotFoundException(String.format("Movie with '%s' not found", id)));
         return movie;
     }
+
+
+    public Movie updateMovie(Long id, MovieDto movieDto) {
+        return null;
+    }
 }
