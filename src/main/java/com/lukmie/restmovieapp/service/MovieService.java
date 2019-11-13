@@ -33,7 +33,6 @@ public class MovieService {
     public Movie getMovie(Long id) {
         Movie movie = movieRepository
                 .findById(id).orElseThrow(() -> new MovieNotFoundException(String.format("Movie with '%s' not found", id)));
-
         return movie;
     }
 
