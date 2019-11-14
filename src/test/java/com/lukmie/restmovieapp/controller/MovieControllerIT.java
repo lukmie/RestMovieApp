@@ -35,6 +35,8 @@ public class MovieControllerIT {
         ResponseEntity<JsonNode> firsResult = testRestTemplate.getForEntity(baseUrl + "/api/movies/" + movieId, JsonNode.class);
         assertThat(firsResult.getStatusCode(), is(HttpStatus.OK));
 
+        testRestTemplate.delete(baseUrl + "/api/movies/" + movieId);
+
         ResponseEntity<JsonNode> secondResult = testRestTemplate.getForEntity(baseUrl + "/api/movies/" + movieId, JsonNode.class);
         assertThat(secondResult.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }

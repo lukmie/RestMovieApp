@@ -23,12 +23,10 @@ public class MovieController {
 
     @PostMapping
     public ResponseEntity<Void> createMovie(@Valid @RequestBody MovieDto movieDto, UriComponentsBuilder uriComponentsBuilder) {
-
         Long id = movieService.createMovie(movieDto);
         UriComponents uriComponents = uriComponentsBuilder.path("/api/movies/{id}").buildAndExpand(id);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uriComponents.toUri());
-
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
@@ -50,6 +48,12 @@ public class MovieController {
     public ResponseEntity<Movie> updateMovie(@PathVariable("id") Long id, @Valid @RequestBody MovieDto movieDto) {
         Movie movie = movieService.updateMovie(id, movieDto);
         return new ResponseEntity<>(movie, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMovie(@PathVariable("id") Long id) {
+        movieService.deleteMovie(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
