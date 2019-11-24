@@ -7,13 +7,13 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/openjdk:9.0.1-11-jdk
+      - image: circleci/openjdk:11.0.5-jdk-stretch
         environment:
           JDBC_DATABASE_URL: jdbc:mysql://localhost:3306/movies_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
           JDBC_DATABASE_USERNAME: root
           JDBC_DATABASE_PASSWORD: root
 
-      - image: circleci/mysql:8.0.18-ram
+      - image: circleci/mysql:8.0
         environment:
           MYSQL_DATABASE: movies_db
 
