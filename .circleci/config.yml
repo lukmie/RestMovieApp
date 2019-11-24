@@ -11,7 +11,7 @@ jobs:
         environment:
           JDBC_DATABASE_URL: jdbc:mysql://localhost:3306/movies_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
           JDBC_DATABASE_USERNAME: root
-          JDBC_DATABASE_PASSWORD: root
+          JDBC_DATABASE_PASSWORD: admin
 
       - image: circleci/mysql:8.0
         environment:
