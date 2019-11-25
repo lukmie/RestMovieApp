@@ -50,7 +50,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/buildpack-deps:trusty-curl
+      - image: circleci/buildpack-deps:trusty
     steps:
       - checkout
       - run:
