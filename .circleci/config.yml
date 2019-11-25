@@ -13,9 +13,13 @@ jobs:
       #          JDBC_DATABASE_USERNAME: root
       #          JDBC_DATABASE_PASSWORD: root
 
-      - image: circleci/postgres:9.6.5-alpine-ram
-        environment:
-          POSTGRES_DB: movies_db
+#      - image: circleci/postgres:9.6.5-alpine-ram
+#        environment:
+#          POSTGRES_DB: movies_db
+
+      - image: circleci/mysql:8.0.4
+          environment:
+            MYSQL_DATABASE: movies_db
 
     # Specify service dependencies here if necessary
     # CircleCI maintains a library of pre-built images
