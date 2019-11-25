@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -68,7 +69,7 @@ class MovieControllerTest {
     @Test
     public void getAllMoviesShouldReturnTwoMovies() throws Exception {
 
-        when(movieService.getAllMovies()).thenReturn(List.of(
+        when(movieService.getAllMovies()).thenReturn(Arrays.asList(
                 createMovie(1L, "12 Angry Men", 1957, "Sidney Lumet", "drama"),
                 createMovie(2L, "Forrest Gump", 1994, "Robert Zemeckis", "comedy")));
 
