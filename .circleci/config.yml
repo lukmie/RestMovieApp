@@ -56,7 +56,7 @@ jobs:
     - run:
         name: Deploy application on heroku
         command:  |
-          git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+          git push https://heroku:1b075ec8-49e5-4b4e-b224-3ae5e87a8485@git.heroku.com/rest-movie-app.git master
 
 workflows:
   version: 2
