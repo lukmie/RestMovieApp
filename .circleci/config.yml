@@ -9,13 +9,23 @@ jobs:
       # specify the version you desire here
       - image: circleci/openjdk:11.0.5-jdk-stretch
         environment:
-          JDBC_DATABASE_URL: jdbc:mysql://localhost:3306/movies_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-          JDBC_DATABASE_USERNAME: root
-          JDBC_DATABASE_PASSWORD: admin
+          MYSQL_DATABASE_URL: jdbc:mysql://localhost:3306/movies_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+          MYSQL_USER: root
+          MYSQL_PASSWORD: admin
 
-      - image: circleci/mysql:8.0
+      #            - image: circleci/mysql:8.0.4
+      #                environment:
+      #                  MYSQL_ROOT_PASSWORD: rootpw
+      #                  MYSQL_DATABASE: movies_db
+      #                  MYSQL_USER: root
+      #                  MYSQL_PASSWORD: admin
+
+      - image: circleci/mysql:8.0.4
         environment:
+          #          MYSQL_ROOT_PASSWORD: rootpw
           MYSQL_DATABASE: movies_db
+          MYSQL_USER: root
+          MYSQL_PASSWORD: admin
 
     # Specify service dependencies here if necessary
     # CircleCI maintains a library of pre-built images
