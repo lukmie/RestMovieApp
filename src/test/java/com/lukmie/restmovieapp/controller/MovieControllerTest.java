@@ -34,6 +34,7 @@ class MovieControllerTest {
     //    only visible on br-1 third change stashed
     //    only visible on br-1 4th change after stashing and checkout
     //    only visible on br-1 5th change after commit amend
+    //    only visible on br-1 6th change stash
     @Autowired
     private MockMvc mockMvc;
     // for serializing java object to json
