@@ -31,6 +31,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class MovieControllerTest {
     //    only visible on br-1
     //    only visible on br-1 second change
+    //    only visible on br-1 third change stashed
+    //    only visible on br-1 4th change after stashing and checkout
+    //    only visible on br-1 5th change after commit amend
     @Autowired
     private MockMvc mockMvc;
     // for serializing java object to json
